@@ -1,0 +1,76 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: demo
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: demo
+        tier: display
+    spec:
+      containers:
+        - image: 2894/whatsapphub
+          name: demo
+          #image: gcr.io/Pipelines/nginx:1.7.9
+          imagePullPolicy: Always
+          ports:
+          - name: http
+            containerPort: 8080
+
+
+
+
+
+#apiVersion: extensions/v1beta1
+#kind: Deployment
+#metadata:
+#    name: opn-arabjo-demo-deployment
+#    namespace: whatsapp
+#spec:
+#    replicas: 2
+#    template:
+#        metadata:
+#            labels:
+#                app: opn-demo-app
+#        spec:
+#            containers:
+#                -   name: demo
+#                    image: 2894/whatsapphub
+#                    env:
+#                        -   name: OPN_SIGN_PROVIDER_URL
+#                            value: http://localhost:8080/RemoteSigner_war_exploded/signproposal
+#                    ports:
+#                        -   containerPort: 8085
+#                    volumeMounts:
+#                        -   name: jo-env-config
+#                            mountPath: /usr/src/app/config/
+#                        #  - name: jo-secret
+#                        #   mountPath: /usr/src/app/kv-store/
+#            volumes:
+#                -   name: jo-env-config
+#                    configMap:
+#                        name: jo-env-config
+#                        #- name: jo-secret
+#                        #  secret:
+#                        # secretName: jo-secret
+##---
+##apiVersion: v1
+##kind: Service
+##metadata:
+##    name: opn-arabjodlt-svc
+##    namespace: arabjo
+##    labels:
+##        app: opn-joclient-app
+##spec:
+##    # type: NodePort
+##    ports:
+##        # the port that this service should serve on
+##        -   port: 8085
+##                #targetPort: 4554
+##            #nodePort: 30037
+##    # label keys and values that must match in order to receive traffic for this service
+##    selector:
+##        app: opn-arabjodlt-app
